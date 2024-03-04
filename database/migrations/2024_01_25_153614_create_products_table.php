@@ -15,6 +15,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('suplier_id');
+            $table->foreign("suplier_id")->references("id")->on("supliers")
+                    ->cascadeOnUpdate()
+                    ->restrictOnDelete();
+            $table->unsignedBigInteger('brand_id');
+            $table->foreign("brand_id")->references("id")->on("brands")
+                    ->cascadeOnUpdate()
+                    ->restrictOnDelete();
             $table->foreign("user_id")->references("id")->on("users")
                     ->cascadeOnUpdate()
                     ->restrictOnDelete();
@@ -22,6 +30,7 @@ return new class extends Migration
                     ->cascadeOnUpdate()
                     ->restrictOnDelete();
             $table->string("name",100);
+            $table->string("stock",50);
             $table->string("price",50);
             $table->string("unit",50);
             $table->string("img_url",1000);

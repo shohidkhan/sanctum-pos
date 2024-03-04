@@ -64,9 +64,9 @@
                     {{-- <a onclick="logout()" class="side-bar-item">
                         <span class="side-bar-item-caption">Logout</span>
                     </a> --}}
-                    <a href="" onclick="logout()" class="side-bar-item">
+                    <p  onclick="logout()" class="side-bar-item">
                         <span class="side-bar-item-caption">Logout</span>
-                    </a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -81,26 +81,46 @@
         <span class="side-bar-item-caption">Dashboard</span>
     </a>
 
+    <a href="{{url("/suppliers")}}" class="side-bar-item">
+        <i class="bi bi-people"></i>
+        <span class="side-bar-item-caption">Suppliers</span>
+    </a>
     <a href="{{url("/customer")}}" class="side-bar-item">
         <i class="bi bi-people"></i>
         <span class="side-bar-item-caption">Customer</span>
     </a>
 
+    <a href="{{url("/brand")}}" class="side-bar-item">
+        <i class="bi bi-list-nested"></i>
+        <span class="side-bar-item-caption">Brand</span>
+    </a>
     <a href="{{url("/category")}}" class="side-bar-item">
         <i class="bi bi-list-nested"></i>
         <span class="side-bar-item-caption">Category</span>
     </a>
 
+    <a href="{{url("/supplier-product")}}" class="side-bar-item">
+        <i class="bi bi-bag"></i>
+        <span class="side-bar-item-caption">SupplierProduct</span>
+    </a>
     <a href="{{url("/product")}}" class="side-bar-item">
         <i class="bi bi-bag"></i>
         <span class="side-bar-item-caption">Product</span>
     </a>
 
+    <a href="{{url('/pruchase')}}" class="side-bar-item">
+        <i class="bi bi-currency-dollar"></i>
+        <span class="side-bar-item-caption">Create Purchase</span>
+    </a>
     <a href="{{url('/sale')}}" class="side-bar-item">
         <i class="bi bi-currency-dollar"></i>
         <span class="side-bar-item-caption">Create Sale</span>
     </a>
 
+    <a href="{{url('/purchase-invoice')}}" class="side-bar-item">
+        <i class="bi bi-receipt"></i>
+        <span class="side-bar-item-caption">Purchase Invoice</span>
+    </a>
     <a href="{{url('/invoice')}}" class="side-bar-item">
         <i class="bi bi-receipt"></i>
         <span class="side-bar-item-caption">Invoice</span>
@@ -122,35 +142,41 @@
 
 
 <script>
-    function MenuBarClickHandler() {
-        let sideNav = document.getElementById('sideNavRef');
-        let content = document.getElementById('contentRef');
-        if (sideNav.classList.contains("side-nav-open")) {
-            sideNav.classList.add("side-nav-close");
-            sideNav.classList.remove("side-nav-open");
-            content.classList.add("content-expand");
-            content.classList.remove("content");
-        } else {
-            sideNav.classList.remove("side-nav-close");
-            sideNav.classList.add("side-nav-open");
-            content.classList.remove("content-expand");
-            content.classList.add("content");
-        }
-    }
+    // function MenuBarClickHandler() {
+    //     let sideNav = document.getElementById('sideNavRef');
+    //     let content = document.getElementById('contentRef');
+    //     if (sideNav.classList.contains("side-nav-open")) {
+    //         sideNav.classList.add("side-nav-close");
+    //         sideNav.classList.remove("side-nav-open");
+    //         content.classList.add("content-expand");
+    //         content.classList.remove("content");
+    //     } else {
+    //         sideNav.classList.remove("side-nav-close");
+    //         sideNav.classList.add("side-nav-open");
+    //         content.classList.remove("content-expand");
+    //         content.classList.add("content");
+    //     }
+    // }
 
 
     async function logout() {
+        try{
         showLoader();
-        let res=axios.get("/logout",HeaderToken());
+        let res=await axios.get("/logout",HeaderToken());
+        console.log(res.status);
+
         hideLoader();
-        console.log(res);
+        
         if(res.data["status"]==="success"){
             successToast(res.data["message"]);
             setTimeout(() => {
-                window.location.href="/";
+                window.location.href="/login";
             }, 1000);
         }else{
             errorToast(res.data["message"]);
+        }
+    }catch (e) {
+        unauthorized(e.response.status)
         }
     }
 </script>

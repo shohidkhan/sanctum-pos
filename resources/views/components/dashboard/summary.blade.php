@@ -168,7 +168,8 @@
 
     getList();
 
-    async function getList(){
+    async function getList(){\
+        try{
         showLoader();
         let res=await axios.get("/summary",HeaderToken());
         hideLoader();
@@ -180,7 +181,9 @@
         document.getElementById("total").innerText=res.data["total"];
         document.getElementById("vat").innerText=res.data["vat"];
         document.getElementById("payable").innerText=res.data["payable"];
-
+        }catch(e){
+            unauthorized(e.response.status);
+        }
     }
     
 </script>

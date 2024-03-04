@@ -32,8 +32,10 @@ class InvoiceController extends Controller
             $vat=$request->input("vat");
             $payable=$request->input("payable");
             $customer_id=$request->input("customer_id");
-
+            //make unique inovice number for invoice tracking
+            $invoice_no = "INV-".time();
             $invoice=Invoice::create([
+                "invoice_no"=>$invoice_no,
                 "user_id"=>$user_id,
                 "total"=>$total,
                 "discount"=>$discount,

@@ -110,6 +110,7 @@
     display: inline-block;
     padding: 15px 10px 15px 20px;
     width: 100% !important;
+    cursor: pointer;
 }
 .side-bar-item:hover{
     border-left: 4px solid #CB0C9F;

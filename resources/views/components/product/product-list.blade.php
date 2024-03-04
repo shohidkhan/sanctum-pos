@@ -37,6 +37,7 @@
 getList();
 
  async function getList() {
+    try{
     showLoader();
     let res=await axios.get("/product-list",HeaderToken());
     hideLoader();
@@ -96,6 +97,9 @@ getList();
             order:[[0,"desc"]],
             lengthMenu:[5,10,15,20,25]
         });
+    }catch(e){
+            unauthorized(e.response.status);
+        }
  }
 
 

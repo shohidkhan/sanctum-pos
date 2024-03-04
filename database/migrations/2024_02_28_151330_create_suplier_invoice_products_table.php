@@ -11,28 +11,29 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('invoice_products', function (Blueprint $table) {
+        Schema::create('suplier_invoice_products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('invoice_id');
-            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('suplier_invoice_id');
+            $table->unsignedBigInteger('suplier_product_id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('brand_id');
-            $table->foreign('invoice_id')->references('id')->on('invoices')
+            $table->foreign('suplier_invoice_id')->references('id')->on('suplier_invoices')
                     ->cascadeOnUpdate()
                     ->restrictOnDelete();
-            $table->foreign('product_id')->references('id')->on('products')
+
+            $table->foreign('suplier_product_id')->references('id')->on('suplier_products')
                     ->cascadeOnUpdate()
                     ->restrictOnDelete();
+                    
             $table->foreign('user_id')->references('id')->on('users')
                     ->cascadeOnUpdate()
                     ->restrictOnDelete();
-
+                    
+            $table->unsignedBigInteger("brand_id");
             $table->foreign("brand_id")->references("id")->on("brands")
                     ->cascadeOnUpdate()
-                    ->restrictOnDelete();
-
+                    ->restrictOnDelete();   
             $table->string('qty',50);
-            $table->string("sale_price",50);
+            $table->string("purchase_price",50);
             $table->timestamps();
         });
     }
@@ -42,6 +43,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('invoice_products');
+        Schema::dropIfExists('suplier_invoice_products');
     }
 };

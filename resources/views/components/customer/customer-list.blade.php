@@ -37,6 +37,7 @@ getList();
 
 
 async function getList() {
+    try{
     showLoader();
     let res= await axios.get("/customer-list",HeaderToken());
     console.log(res.data)
@@ -81,7 +82,9 @@ async function getList() {
             lengthMenu:[5,10,15,20,25]
         });
 
-
+    }catch(e){
+        unauthorized(e.response.status);
+    }
 }
 
 

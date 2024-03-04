@@ -7,7 +7,7 @@
                     <h5>Invoices</h5>
                 </div>
                 <div class="align-items-center col">
-                    <a    href="{{url("/salePage")}}" class="float-end btn m-0 bg-gradient-primary">Create Sale</a>
+                    <a    href="{{url("/sale")}}" class="float-end btn m-0 bg-gradient-primary">Create Sale</a>
                 </div>
             </div>
             <hr class="bg-dark "/>
@@ -16,7 +16,7 @@
                 <tr class="bg-light">
                     <th>No</th>
                     <th>Name</th>
-                    <th>Phone</th>
+                    <th>Invoice No</th>
                     <th>Total</th>
                     <th>Vat</th>
                     <th>Discount</th>
@@ -90,6 +90,7 @@
 getList();
 
 async function getList(){
+    try{
     showLoader();
     let res=await axios.get("/invoice-list",HeaderToken());
     hideLoader();
@@ -111,7 +112,7 @@ async function getList(){
                     ${item["customer"]["name"]}
                 </td>
                 <td>
-                    ${item["customer"]["mobile"]}
+                    ${item["invoice_no"]}
                 </td>
                 <td>
                     ${item["total"]}
@@ -127,7 +128,7 @@ async function getList(){
                 </td>
                 <td>
                     <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="viewBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm fa-eye"></i></button>
-                        <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm  fa-trash-alt"></i></button>
+                    <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm  fa-trash-alt"></i></button>
                 </td>
             </tr>
         `;
@@ -150,7 +151,9 @@ async function getList(){
         lengthMenu:[5,10,15,20,30]
     });
 
-
+    }catch(e){
+            unauthorized(e.response.status);
+        }
 }
 
 
